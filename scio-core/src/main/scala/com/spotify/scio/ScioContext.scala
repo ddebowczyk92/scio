@@ -598,8 +598,7 @@ class ScioContext private[scio] (
 
       override def waitUntilFinish(duration: Duration, cancelJob: Boolean): ScioResult = {
         val wait = duration match {
-          // according to PipelineResult values <= 1 ms mean `Duration.Inf`
-          case Duration.Inf => -1
+          case Duration.Inf => Long.MaxValue
           case d            => d.toMillis
         }
         // according to PipelineResult returns null on timeout
